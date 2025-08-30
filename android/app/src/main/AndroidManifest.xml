@@ -1,0 +1,103 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <!-- Core & sensors -->
+  <uses-permission android:name="android.permission.INTERNET" />
+  <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
+  <uses-permission android:name="android.permission.BODY_SENSORS" />
+  <uses-permission android:name="android.permission.VIBRATE" />
+
+  <!-- Health Connect global read/write (Android 14 health perms model works with these + scoped below) -->
+  <uses-permission android:name="android.permission.READ_HEALTH_DATA" />
+  <uses-permission android:name="android.permission.WRITE_HEALTH_DATA" />
+
+  <!-- Health (scoped) read/write permissions -->
+  <uses-permission android:name="android.permission.health.READ_DISTANCE" />
+  <uses-permission android:name="android.permission.health.READ_FLOORS_CLIMBED" />
+  <uses-permission android:name="android.permission.health.READ_STEPS" />
+  <uses-permission android:name="android.permission.health.WRITE_STEPS" />
+  <uses-permission android:name="android.permission.health.READ_HEART_RATE" />
+
+  <!-- Blood Pressure -->
+  <uses-permission android:name="android.permission.health.READ_BLOOD_PRESSURE" />
+  <!-- Respiratory Rate -->
+  <uses-permission android:name="android.permission.health.READ_RESPIRATORY_RATE" />
+  <!-- Calories Burned -->
+  <uses-permission android:name="android.permission.health.READ_ACTIVE_CALORIES_BURNED" />
+  <!-- Sleep Sessions -->
+  <uses-permission android:name="android.permission.health.READ_SLEEP" />
+  <!-- Oxygen Saturation -->
+  <uses-permission android:name="android.permission.health.READ_OXYGEN_SATURATION" />
+  <!-- Body Temperature -->
+  <uses-permission android:name="android.permission.health.READ_BODY_TEMPERATURE" />
+  <!-- Basal Metabolic Rate -->
+  <uses-permission android:name="android.permission.health.READ_BASAL_METABOLIC_RATE" />
+  <!-- Weight -->
+  <uses-permission android:name="android.permission.health.READ_WEIGHT" />
+  <!-- Height -->
+  <uses-permission android:name="android.permission.health.READ_HEIGHT" />
+  <!-- Blood Glucose -->
+  <uses-permission android:name="android.permission.health.READ_BLOOD_GLUCOSE" />
+  <!-- Exercise sessions -->
+  <uses-permission android:name="android.permission.health.READ_EXERCISE" />
+
+  <!-- If you also read exercise routes/paths, add: -->
+  <uses-permission android:name="android.permission.health.READ_EXERCISE_ROUTE" />
+
+
+  <application
+      android:name=".MainApplication"
+      android:label="@string/app_name"
+      android:icon="@mipmap/ic_launcher"
+      android:roundIcon="@mipmap/ic_launcher_round"
+      android:allowBackup="true"
+      android:supportsRtl="true"
+      android:theme="@style/AppTheme">
+
+    <!-- Expo updates config -->
+    <meta-data android:name="expo.modules.updates.ENABLED" android:value="false" />
+    <meta-data android:name="expo.modules.updates.EXPO_UPDATES_CHECK_ON_LAUNCH" android:value="ALWAYS" />
+    <meta-data android:name="expo.modules.updates.EXPO_UPDATES_LAUNCH_WAIT_MS" android:value="0" />
+
+    <activity
+        android:name=".MainActivity"
+        android:exported="true"
+        android:launchMode="singleTask"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="adjustResize"
+        android:theme="@style/Theme.App.SplashScreen"
+        android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|uiMode">
+
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+
+      <!-- Deep links (keep if you use them) -->
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <data android:scheme="healthappdemo" />
+        <data android:scheme="exp+healthappdemo" />
+      </intent-filter>
+
+      <!-- Health Permissions rationale hook -->
+      <intent-filter>
+        <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE" />
+      </intent-filter>
+    </activity>
+
+    <!-- Optional: View health permission usage (per Health Permissions docs) -->
+    <activity-alias
+        android:name="ViewPermissionUsageActivity"
+        android:exported="true"
+        android:targetActivity=".MainActivity"
+        android:permission="android.permission.START_VIEW_PERMISSION_USAGE">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW_PERMISSION_USAGE" />
+        <category android:name="android.intent.category.HEALTH_PERMISSIONS" />
+      </intent-filter>
+    </activity-alias>
+
+  </application>
+</manifest>
